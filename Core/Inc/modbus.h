@@ -2,11 +2,25 @@
 #define INC_MODBUS_H_
 #include "inttypes.h"
 
-#define MB_TCP_PORT (502)
 
 #define MB_PDU_MAXSIZE (253)
-#define MB_MBAP_SIZE (7)
+// -------------------------- CONFIG START-------------------------------//
 #define MB_ADU_MAXSIZE (MB_PDU_MAXSIZE + MB_MBAP_SIZE)
+
+#define MB_COILS_ST			(0)
+#define MB_COILS_Q			(0xFF)
+#define MB_DISCRETE_ST	(MB_COILS_ST + MB_COILS_Q)
+#define MB_DISCRETE_Q		(0)
+#define MB_HOLDING_ST 	(MB_DISCRETE_ST + MB_DISCRETE_Q)
+#define MB_HOLDING_Q		(0 * 2)
+#define MB_INPUT_ST			(MB_HOLDING_ST + MB_HOLDING_Q)
+#define MB_INPUT_Q			(4 * 2)
+#define MB_MEMORY_SIZE	(MB_COILS_Q + MB_DISCRETE_Q + MB_HOLDING_Q + MB_INPUT_Q)
+// -------------------------- CONFIG END-------------------------------//
+#define MB_TCP_PORT (502)
+#define MB_MBAP_SIZE (7)
+
+
 
 #define MB_MBAP_TRANSACTION_ID_H	(0)
 #define MB_MBAP_TRANSACTION_ID_L	(1)
@@ -25,17 +39,7 @@
 // repl byte positions
 #define MB_PDU_VAL_START					(MB_PDU_FN+1)
 #define MB_PDU_EXCEPTION_CODE			(MB_PDU_VAL_START)
-
-
-#define MB_COILS_ST			(0)
-#define MB_COILS_Q			(4)
-#define MB_DISCRETE_ST	(MB_COILS_ST + MB_COILS_Q)
-#define MB_DISCRETE_Q		(0)
-#define MB_HOLDING_ST 	(MB_DISCRETE_ST + MB_DISCRETE_Q)
-#define MB_HOLDING_Q		(0 * 2)
-#define MB_INPUT_ST			(MB_HOLDING_ST + MB_HOLDING_Q)
-#define MB_INPUT_Q			(4 * 2)
-#define MB_MEMORY_SIZE	(MB_COILS_Q + MB_DISCRETE_Q + MB_HOLDING_Q + MB_INPUT_Q)
+#define MB_PDU_REPL_N							(MB_PDU_VAL_START)
 
 #define MB_FN_READ_COILS		(0x01)
 #define MB_FN_READ_DISCRETE	(0x02)
