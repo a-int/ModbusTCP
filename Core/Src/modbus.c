@@ -2,7 +2,7 @@
 #include <string.h>
 
 static uint16_t	mb_process_read_fn(char *mb_repl_buf, char *mb_req_buf, uint16_t req_buf_len);
-static uint16_t	mb_process_write_fn(char *mb_repl_buf, char *mb_req_buf, uint16_t req_buf_len);
+static uint16_t	mb_process_write_single_fn(char *mb_repl_buf, char *mb_req_buf, uint16_t req_buf_len);
 static uint16_t	mb_process_err(char *mb_repl_buf, uint8_t fn, uint16_t exceptionCode);
 static uint8_t	mb_process_start_address(uint16_t fn, uint16_t start_address, uint16_t quantity);
 static uint8_t	mb_process_val(uint16_t fn, uint16_t val);
@@ -27,7 +27,7 @@ uint16_t mb_process(char *mb_repl_buf, char *mb_req_buf, uint16_t req_buf_len) {
 		break;
 	case MB_FN_WRITE_S_COIL:
 	case MB_FN_WRITE_S_HOLDING:
-		pduLen = mb_process_write_fn(mb_repl_buf, mb_req_buf, req_buf_len);
+		pduLen = mb_process_write_single_fn(mb_repl_buf, mb_req_buf, req_buf_len);
 		break;
 	case MB_FN_WRITE_M_COIL:
 	case MB_FN_WRITE_M_HOLDING:
@@ -54,12 +54,12 @@ static uint16_t mb_process_read_fn(char *mb_repl_buf, char *mb_req_buf, uint16_t
 	} else { // form PDU content
 		mb_repl_buf[MB_PDU_FN] = fn;
 		mb_repl_buf[MB_PDU_REPL_N] = mb_pdu_calc_N(fn, quantity);
-		// mb_process_read_fn_vals(mb_repl_buf, mb_req_buf);
+		// FIXME add reading from sources
 	}
 	return mb_pdu_calc_N(fn, quantity) + 2;
 }
 
-static uint16_t mb_process_write_fn(char *mb_repl_buf, char *mb_req_buf, uint16_t req_buf_len) {
+static uint16_t mb_process_write_single_fn(char *mb_repl_buf, char *mb_req_buf, uint16_t req_buf_len) {
 	uint8_t fn = mb_req_buf[MB_PDU_FN];
 	uint16_t address = mb_req_buf[MB_PDU_W_REG_ADDR_L] + (mb_req_buf[MB_PDU_W_REG_ADDR_H] << 8);
 	uint16_t valToWrite = mb_req_buf[MB_PDU_W_REG_VAL_L] + (mb_req_buf[MB_PDU_W_REG_VAL_H] << 8);
@@ -74,10 +74,11 @@ static uint16_t mb_process_write_fn(char *mb_repl_buf, char *mb_req_buf, uint16_
 		mb_repl_buf[MB_PDU_W_REG_ADDR_L] = mb_req_buf[MB_PDU_W_REG_ADDR_L];
 		mb_repl_buf[MB_PDU_W_REG_VAL_H] = mb_req_buf[MB_PDU_W_REG_VAL_H];
 		mb_repl_buf[MB_PDU_W_REG_VAL_L] = mb_req_buf[MB_PDU_W_REG_VAL_L];
-		// do something asked
+
+//		if(fn == MB_FN_WRITE_S_COIL) write_single_coil(address, valToWrite);
+//		if(fn == MB_FN_WRITE_S_HOLDING) write_single_holding(address, valToWrite);
 	}
-	return 5; // FIXME the pdu size eq to 5 just for write single X
-						// 				for multiple writes its calculated from provided quantity
+	return 5; // PDU size for write single XXX command
 }
 
 static void mb_mbap_copy(char *mb_repl_buf, char *mb_req_buf) {
@@ -100,11 +101,11 @@ static uint8_t mb_process_start_address(uint16_t fn, uint16_t start_address, uin
 			exception_code = 2;
 		break;
 	case MB_FN_READ_HOLDING:
-		if ((start_address + quantity * 2) > MB_HOLDING_Q)
+		if ((start_address + quantity) > MB_HOLDING_Q)
 			exception_code = 2;
 		break;
 	case MB_FN_READ_INPUT:
-		if ((start_address + quantity * 2) > MB_INPUT_Q)
+		if ((start_address + quantity) > MB_INPUT_Q)
 			exception_code = 2;
 		break;
 
