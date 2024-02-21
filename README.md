@@ -45,3 +45,23 @@ The most interesting source files to look at:
 - Core/Inc/modbus.h
 - Core/Src/modbus.c
 - Core/Src/tcpserver.c
+
+## Demonstration <a name="demo"></a>
+
+#### Read commands
+
+<img src="/pics/readCoils.png" width="623" height="341"/>
+<img src="/pics/readDiscrete.png" width="623" height="341"/>
+<img src="/pics/readHoldings.png" width="617" height="411"/>
+<img src="/pics/readHoldings.png" width="617" height="411"/>
+
+#### Write commands
+
+<img src="/pics/writeCoil.png" width="618" height="411"/>
+<img src="/pics/writeHolding.png" width="618" height="411"/>
+
+#### Error handlers
+
+<img src="/pics/err1.png" width="617" height="416"/>
+<img src="/pics/err2.png" width="618" height="416"/>
+<img src="/pics/err3.png" width="618" height="416"/>
