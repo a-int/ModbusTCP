@@ -40,3 +40,8 @@ Supported error handlers are:
 - 0x01 - unsupported commands;
 - 0x02 - wrong data address or quantity is requested;
 - 0x03 - wrong value to write is provided;
+
+The most interesting source files to look at:
+- Core/Inc/modbus.h
+- Core/Src/modbus.c
+- Core/Src/tcpserver.c
