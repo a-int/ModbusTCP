@@ -53,7 +53,6 @@ The most interesting source files to look at:
 <img src="/pics/readCoils.png" width="623" height="341"/>
 <img src="/pics/readDiscrete.png" width="623" height="341"/>
 <img src="/pics/readHoldings.png" width="617" height="411"/>
-<img src="/pics/readHoldings.png" width="617" height="411"/>
 
 #### Write commands
 
