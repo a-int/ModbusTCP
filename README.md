@@ -27,6 +27,7 @@ All parsing and error checking is done on site. The user just need to add functi
 ```
 
 In this work it was necessary to write software code for a STM32F4 microcontroller to communicate over Modbus protocol with external device (PC) over Ethernet.
+
 Supported commands are: 
 - 0x01 - read a coil;
 - 0x02 - read discrete inputs;
@@ -34,6 +35,7 @@ Supported commands are:
 - 0x04 - read input registers;
 - 0x05 - write a single coil;
 - 0x06 - write a single holding registers.
+  
 Supported error handlers are: 
 - 0x01 - unsupported commands;
 - 0x02 - wrong data address or quantity is requested;
