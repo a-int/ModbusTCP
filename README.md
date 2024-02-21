@@ -1,6 +1,7 @@
 # Table of contents
 
 1. [Overview](#overview)
+2. [Demonstration](#demo)
 
 ## Overview <a name="overview"></a>
 
