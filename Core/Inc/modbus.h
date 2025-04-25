@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #ifndef INC_MODBUS_H_
 #define INC_MODBUS_H_
 #include "inttypes.h"

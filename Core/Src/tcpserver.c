@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include "lwip/opt.h"
 #include "lwip/api.h"
 #include "lwip/sys.h"
